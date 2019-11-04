@@ -1,10 +1,11 @@
 // Tokens
 %token 
-  INT  
-  PLUS
+  INT
 
 // Operator associativity & precedence
-%left PLUS
+%left PLUS MINUS
+%left MULT DIV
+%left MOD
 
 // Root-level grammar symbol
 %start program;
@@ -43,7 +44,23 @@ expr:
   | 
   expr PLUS expr { 
     $$ = ast_operation(PLUS, $1, $3); 
-  } 
+  }
+  |
+  expr MINUS expr {
+    $$ = ast_operation(MINUS, $1, $3);
+  }
+  |
+  expr MULT expr {
+    $$ = ast_operation(MULT, $1, $3);
+  }
+  |
+  expr DIV expr {
+    $$ = ast_operation(DIV, $1, $3);
+  }
+  |
+  expr MOD expr {
+    $$ = ast_operation(MOD, $1, $3);
+  }
   ;
 %%
 

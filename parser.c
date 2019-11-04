@@ -98,7 +98,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 23 "parser.bison"
+#line 24 "parser.bison"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -119,7 +119,11 @@ Expr* root;
   enum yytokentype
   {
     INT = 258,
-    PLUS = 259
+    PLUS = 259,
+    MINUS = 260,
+    MULT = 261,
+    DIV = 262,
+    MOD = 263
   };
 #endif
 
@@ -127,12 +131,12 @@ Expr* root;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 13 "parser.bison"
+#line 14 "parser.bison"
 
   int intValue;
   Expr* exprValue; 
 
-#line 136 "parser.c"
+#line 140 "parser.c"
 
 };
 typedef union YYSTYPE YYSTYPE;
@@ -382,19 +386,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  4
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   4
+#define YYLAST   15
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  5
+#define YYNTOKENS  9
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  4
+#define YYNRULES  8
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  7
+#define YYNSTATES  15
 
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   259
+#define YYMAXUTOK   263
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
    as returned by yylex, with out-of-bounds checking.  */
@@ -430,14 +434,15 @@ static const yytype_uint8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     2,     2,     2,     2,     2,     1,     2,     3,     4
+       2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
+       5,     6,     7,     8
 };
 
 #if YYDEBUG
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    37,    37,    40,    44
+       0,    38,    38,    41,    45,    49,    53,    57,    61
 };
 #endif
 
@@ -446,8 +451,8 @@ static const yytype_uint8 yyrline[] =
    First, the terminals, then, starting at YYNTOKENS, nonterminals.  */
 static const char *const yytname[] =
 {
-  "$end", "error", "$undefined", "INT", "PLUS", "$accept", "program",
-  "expr", YY_NULLPTR
+  "$end", "error", "$undefined", "INT", "PLUS", "MINUS", "MULT", "DIV",
+  "MOD", "$accept", "program", "expr", YY_NULLPTR
 };
 #endif
 
@@ -456,14 +461,14 @@ static const char *const yytname[] =
    (internal) symbol number NUM (which must be that of a token).  */
 static const yytype_uint16 yytoknum[] =
 {
-       0,   256,   257,   258,   259
+       0,   256,   257,   258,   259,   260,   261,   262,   263
 };
 # endif
 
-#define YYPACT_NINF -4
+#define YYPACT_NINF -5
 
 #define yypact_value_is_default(Yystate) \
-  (!!((Yystate) == (-4)))
+  (!!((Yystate) == (-5)))
 
 #define YYTABLE_NINF -1
 
@@ -474,7 +479,8 @@ static const yytype_uint16 yytoknum[] =
      STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -3,    -4,     1,    -2,    -4,    -3,    -4
+      10,    -5,    14,    -4,    -5,    10,    10,    10,    10,    10,
+       4,     4,     7,     7,    -5
 };
 
   /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -482,13 +488,14 @@ static const yytype_int8 yypact[] =
      means the default is an error.  */
 static const yytype_uint8 yydefact[] =
 {
-       0,     3,     0,     2,     1,     0,     4
+       0,     3,     0,     2,     1,     0,     0,     0,     0,     0,
+       4,     5,     6,     7,     8
 };
 
   /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-      -4,    -4,    -1
+      -5,    -5,     0
 };
 
   /* YYDEFGOTO[NTERM-NUM].  */
@@ -502,31 +509,34 @@ static const yytype_int8 yydefgoto[] =
      number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_uint8 yytable[] =
 {
-       1,     4,     5,     0,     6
+       5,     6,     7,     8,     9,    10,    11,    12,    13,    14,
+       7,     8,     9,     1,     4,     9
 };
 
-static const yytype_int8 yycheck[] =
+static const yytype_uint8 yycheck[] =
 {
-       3,     0,     4,    -1,     5
+       4,     5,     6,     7,     8,     5,     6,     7,     8,     9,
+       6,     7,     8,     3,     0,     8
 };
 
   /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
      symbol of state STATE-NUM.  */
 static const yytype_uint8 yystos[] =
 {
-       0,     3,     6,     7,     0,     4,     7
+       0,     3,    10,    11,     0,     4,     5,     6,     7,     8,
+      11,    11,    11,    11,    11
 };
 
   /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const yytype_uint8 yyr1[] =
 {
-       0,     5,     6,     7,     7
+       0,     9,    10,    11,    11,    11,    11,    11,    11
 };
 
   /* YYR2[YYN] -- Number of symbols on the right hand side of rule YYN.  */
 static const yytype_uint8 yyr2[] =
 {
-       0,     2,     1,     1,     3
+       0,     2,     1,     1,     3,     3,     3,     3,     3
 };
 
 
@@ -1211,29 +1221,61 @@ yyreduce:
   switch (yyn)
     {
   case 2:
-#line 37 "parser.bison"
+#line 38 "parser.bison"
     { root = (yyvsp[0].exprValue); }
-#line 1217 "parser.c"
+#line 1227 "parser.c"
     break;
 
   case 3:
-#line 40 "parser.bison"
+#line 41 "parser.bison"
     { 
     (yyval.exprValue) = ast_integer((yyvsp[0].intValue)); 
   }
-#line 1225 "parser.c"
+#line 1235 "parser.c"
     break;
 
   case 4:
-#line 44 "parser.bison"
+#line 45 "parser.bison"
     { 
     (yyval.exprValue) = ast_operation(PLUS, (yyvsp[-2].exprValue), (yyvsp[0].exprValue)); 
   }
-#line 1233 "parser.c"
+#line 1243 "parser.c"
+    break;
+
+  case 5:
+#line 49 "parser.bison"
+    {
+    (yyval.exprValue) = ast_operation(MINUS, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));
+  }
+#line 1251 "parser.c"
+    break;
+
+  case 6:
+#line 53 "parser.bison"
+    {
+    (yyval.exprValue) = ast_operation(MULT, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));
+  }
+#line 1259 "parser.c"
+    break;
+
+  case 7:
+#line 57 "parser.bison"
+    {
+    (yyval.exprValue) = ast_operation(DIV, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));
+  }
+#line 1267 "parser.c"
+    break;
+
+  case 8:
+#line 61 "parser.bison"
+    {
+    (yyval.exprValue) = ast_operation(MOD, (yyvsp[-2].exprValue), (yyvsp[0].exprValue));
+  }
+#line 1275 "parser.c"
     break;
 
 
-#line 1237 "parser.c"
+#line 1279 "parser.c"
 
       default: break;
     }
@@ -1465,7 +1507,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 48 "parser.bison"
+#line 65 "parser.bison"
 
 
 void yyerror(const char* err) {

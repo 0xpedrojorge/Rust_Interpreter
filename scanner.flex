@@ -19,6 +19,10 @@ int yyline = 1;
    return INT; 
 }
 "+" { return PLUS; }
+"-" { return MINUS; }
+"*" { return MULT; }
+"/" { return DIV; }
+"%" { return MOD; }
 .  { yyerror("unexpected character"); }
 %%
 

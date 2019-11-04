@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
-  "/home/pedro/Documents/CLionProjects/COMP_Rsut_Interpreter/main.c" "/home/pedro/Documents/CLionProjects/COMP_Rsut_Interpreter/cmake-build-debug/CMakeFiles/COMP_Rsut_Interpreter.dir/main.c.o"
+  "/home/pedro/Documents/CLionProjects/COMP_Rust_Interpreter/main.c" "/home/pedro/Documents/CLionProjects/COMP_Rust_Interpreter/cmake-build-debug/CMakeFiles/COMP_Rsut_Interpreter.dir/main.c.o"
   )
 set(CMAKE_C_COMPILER_ID "GNU")
 

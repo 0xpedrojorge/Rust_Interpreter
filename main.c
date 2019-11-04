@@ -1,6 +1,8 @@
 #include <stdio.h>
+#include "parser.h"
+#include "printAbsTree.c"
 
 int main() {
-    printf("Hello, World!\n");
+
     return 0;
 }

@@ -16,6 +16,18 @@ int eval(Expr* expr) {
       case PLUS: 
         result = vLeft + vRight; 
         break;
+      case MINUS:
+        result = vLeft - vRight;
+        break;
+      case MULT:
+        result = vLeft * vRight;
+        break;
+      case DIV:
+        result = vLeft / vRight;
+        break;
+      case MOD:
+        result= vLeft % vRight;
+        break;
       // TODO Other cases here ...
       default: yyerror("Unknown operator!");
     }
