@@ -2,9 +2,15 @@
   <dictionary name="pedro">
     <words>
       <w>boolexpr</w>
+      <w>cmdlist</w>
       <w>mult</w>
+      <w>noyywrap</w>
       <w>nsur</w>
       <w>relop</w>
+      <w>yyerror</w>
+      <w>yyline</w>
+      <w>yylval</w>
+      <w>yytext</w>
     </words>
   </dictionary>
 </component>

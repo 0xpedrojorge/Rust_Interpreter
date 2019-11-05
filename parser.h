@@ -44,7 +44,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 30 "parser.bison"
+#line 54 "parser.bison"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,7 +55,7 @@ extern int yyline;
 extern char* yytext;
 extern FILE* yyin;
 extern void yyerror(const char* msg);
-Expr* root;
+CmdList* root;
 
 #line 61 "parser.h"
 
@@ -65,19 +65,34 @@ Expr* root;
   enum yytokentype
   {
     INT = 258,
-    TRUE = 259,
-    FALSE = 260,
-    EQ = 261,
-    NE = 262,
-    LT = 263,
-    GT = 264,
-    LE = 265,
-    GE = 266,
-    PLUS = 267,
-    MINUS = 268,
-    MULT = 269,
-    DIV = 270,
-    MOD = 271
+    VAR = 259,
+    TRUE = 260,
+    FALSE = 261,
+    _LET = 262,
+    _IF = 263,
+    _ELSE = 264,
+    _WHILE = 265,
+    _ATTRIB = 266,
+    AT = 267,
+    SC = 268,
+    OCB = 269,
+    CCB = 270,
+    OP = 271,
+    CP = 272,
+    _PRINT = 273,
+    _READ = 274,
+    string = 275,
+    EQ = 276,
+    NE = 277,
+    LT = 278,
+    GT = 279,
+    LE = 280,
+    GE = 281,
+    PLUS = 282,
+    MINUS = 283,
+    MULT = 284,
+    DIV = 285,
+    MOD = 286
   };
 #endif
 
@@ -85,13 +100,16 @@ Expr* root;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "parser.bison"
+#line 33 "parser.bison"
 
   int intValue;
+  char* stringValue;
   Expr* exprValue;
   BoolExpr* boolExprValue;
+  Cmd* cmdValue;
+  CmdList* cmdListValue;
 
-#line 95 "parser.h"
+#line 113 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

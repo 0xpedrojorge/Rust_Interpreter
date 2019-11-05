@@ -63,15 +63,15 @@ relational operators '==', '!=', '<', '>', <=' and '>='.
 
 The following steps are suggested:
 
-NSUR a) In ast.h: define the BoolExpr datatype and the declare the corresponding boolean expressions constructors.
+DONE a) In ast.h: define the BoolExpr datatype and the declare the corresponding boolean expressions constructors.
 
-NSUR b) In ast.c: implement the new constructor functions.
+DONE b) In ast.c: implement the new constructor functions.
 
 DONE c) In scanner.flex add the new boolean operators.
 
-HALF d) In parser.bison change the grammar by:
+DONE d) In parser.bison change the grammar by:
 DONE -- adding grammar rules for boolean expressions.
-NSUR -- define new type rules for boolean expressions.
+DONE -- define new type rules for boolean expressions.
 
 e) In printAbsTree.c : define a function printBool(BoolExpr* b) which prints the abstract syntax tree stored in b.
 
@@ -83,13 +83,13 @@ Handle commands following C syntax consisting of assignments, if then and if the
 
 The following steps are suggested:
 
-a) In ast.h: define the Cmd datatype and the declare the corresponding command constructors.
+DONE a) In ast.h: define the Cmd datatype and the declare the corresponding command constructors.
 
-b) In ast.c: implement the new constructor functions.
+DONE b) In ast.c: implement the new constructor functions.
 
-c) In scanner.flex add the new tokens belonging to the language of commands (while, if, then, else, = , ; , { , }).
+DONE c) In scanner.flex add the new tokens belonging to the language of commands (while, if, then, else, = , ; , { , }).
 
-d) In parser.bison change the grammar by:
+DONE d) In parser.bison change the grammar by:
 -- adding grammar rules for commands.
 -- define new type rules for commands.
 -- define the root variable as a command.

@@ -31,8 +31,18 @@ int yyline = 1;
 ">" { return GT; }
 "<=" { return LE; }
 ">=" { return GE; }
-"let" { return _ATTRIB; }
+"let" { return _LET; }
 "if" { return _IF; }
+"else" { return _ELSE; }
+"while" { return _WHILE; }
+"=" { return AT; }
+";" { return SC; }
+"{" { return OCB; }
+"}" { return CCB; }
+"(" { return OP; }
+")" { return CP; }
+"println!" { return _PRINT; }
+"read_line()" { return _READ; }
 .  { yyerror("unexpected character"); }
 %%
 

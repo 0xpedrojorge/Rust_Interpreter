@@ -1,12 +1,27 @@
 // Tokens
 %token
   INT
+  VAR
   TRUE
   FALSE
+  _LET
+  _IF
+  _ELSE
+  _WHILE
+  _ATTRIB
+  AT
+  SC
+  OCB
+  CCB
+  OP
+  CP
+  _PRINT
+  _READ
+  string
 
 
 // Operator associativity & precedence
-%left EQ NE LT GT LE GE
+%precedence EQ NE LT GT LE GE
 %left PLUS MINUS
 %left MULT DIV MOD
 
@@ -17,19 +32,28 @@
 // Types/values in association to grammar symbols.
 %union {
   int intValue;
+  char* stringValue;
   Expr* exprValue;
   BoolExpr* boolExprValue;
+  Cmd* cmdValue;
+  CmdList* cmdListValue;
 }
 
 %type <intValue> INT
+%type <stringValue> VAR
+%type <intValue> TRUE
+%type <intValue> FALSE
+%type <stringValue> string
 %type <exprValue> expr
 %type <boolExprValue> boolexpr
+%type <cmdValue> cmd
+%type <cmdListValue> cmdlist
 
 // Use "%code requires" to make declarations go
 // into both parser.c and parser.h
 %code requires {
 #include <stdio.h>
-#include <stdlib.h>
+#include <stdlib.h>ma
 #include "ast.h"
 
 extern int yylex();
@@ -37,16 +61,20 @@ extern int yyline;
 extern char* yytext;
 extern FILE* yyin;
 extern void yyerror(const char* msg);
-Expr* root;
+CmdList* root;
 }
 
 %%
-program: expr { root = $1; }
+program: cmdlist { root = $1; }
 
 expr:
   INT {
     $$ = ast_integer($1);
   }
+  |
+  VAR {
+    $$ = ast_variable($1);
+  };
   |
   expr PLUS expr {
     $$ = ast_operation(PLUS, $1, $3);
@@ -102,6 +130,37 @@ boolexpr:
     $$ = ast_relation(GE, $1, $3);
   }
   ;
+
+cmd:
+  _LET VAR AT expr {
+    $$ = ast_attribution($2, $4);
+  }
+  |
+  _IF boolexpr OCB expr CCB _ELSE OCB expr CCB {
+    $$ = ast_if_else_condition($2, $4, $8);
+  }
+  |
+  _IF boolexpr OCB expr CCB {
+    $$ = ast_if_condition($2, $4);
+  }
+  |
+  _WHILE boolexpr OCB expr CCB {
+    $$ = ast_while_loop($2, $4);
+  }
+  |
+  _PRINT OP string CP {
+    $$ = ast_write($3);
+  }
+  |
+  VAR AT _READ {
+    $$ = ast_read($1);
+  }
+  ;
+
+cmdlist:
+  cmd cmdlist {
+    $$ = ast_command_list($1, $2);
+  }
 
 %%
 
