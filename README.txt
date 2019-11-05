@@ -36,15 +36,15 @@ type "./interpreter example1.txt".
 2. Handle binary operators '-', '*', '/', '%'.
 You'll need to:
 
-a) Modify the parser / scanner by defining / recognising 
+DONE a) Modify the parser / scanner by defining / recognising
 a new tokens for each operator, and also operator 
 associativity and precedence.
 
-b) Add new rules to the grammar for 'expr'.
+DONE b) Add new rules to the grammar for 'expr'.
 
-c) Modify the 'eval' function in 'interpreter.c'.
+DONE c) Modify the 'eval' function in 'interpreter.c'.
 
-d) Test with examples that make use of the new
+DONE d) Test with examples that make use of the new
 operators, for instance the available 'example3.txt'.
 
 e) Define a new file printAbsTree.c and define there a C function printExpr(Expr* exp) which prints the abstract syntax tree stored in the Expr C structure exp.
@@ -63,15 +63,15 @@ relational operators '==', '!=', '<', '>', <=' and '>='.
 
 The following steps are suggested:
 
-a) In ast.h: define the BoolExpr datatype and the declare the corresponding boolean expressions constructors.
+NSUR a) In ast.h: define the BoolExpr datatype and the declare the corresponding boolean expressions constructors.
 
-b) In asa.c: implement the new constructor functions.
+NSUR b) In ast.c: implement the new constructor functions.
 
-c) In scanner.flex add the new boolean operators.
+DONE c) In scanner.flex add the new boolean operators.
 
-d) In parser.bison change the grammar by:
--- adding grammar rules for boolean expressions.
--- define new type rules for boolean expressions.
+HALF d) In parser.bison change the grammar by:
+DONE -- adding grammar rules for boolean expressions.
+NSUR -- define new type rules for boolean expressions.
 
 e) In printAbsTree.c : define a function printBool(BoolExpr* b) which prints the abstract syntax tree stored in b.
 
@@ -85,7 +85,7 @@ The following steps are suggested:
 
 a) In ast.h: define the Cmd datatype and the declare the corresponding command constructors.
 
-b) In asa.c: implement the new constructor functions.
+b) In ast.c: implement the new constructor functions.
 
 c) In scanner.flex add the new tokens belonging to the language of commands (while, if, then, else, = , ; , { , }).
 

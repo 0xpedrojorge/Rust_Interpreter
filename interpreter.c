@@ -31,7 +31,7 @@ int eval(Expr* expr) {
       // TODO Other cases here ...
       default: yyerror("Unknown operator!");
     }
-  }
+  } else if (expr)
   return result;
 }
 int main(int argc, char** argv) {

@@ -23,6 +23,16 @@ int yyline = 1;
 "*" { return MULT; }
 "/" { return DIV; }
 "%" { return MOD; }
+"true" { return TRUE; }
+"false" { return FALSE; }
+"==" { return EQ; }
+"!=" { return NE; }
+"<" { return LT; }
+">" { return GT; }
+"<=" { return LE; }
+">=" { return GE; }
+"let" { return _ATTRIB; }
+"if" { return _IF; }
 .  { yyerror("unexpected character"); }
 %%
 
