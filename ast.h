@@ -33,7 +33,7 @@ struct _BoolExpr {
     B_EXPRESSION
   } kind;
   union {
-    int value; // for true or false
+    char* value; // for true or false
     struct {
       int operator; // EQ, NE, GT, LT, GE, LE
       Expr *left;
@@ -50,6 +50,7 @@ struct _Cmd {
     C_IF,
     C_IF_ELSE,
     C_WHILE,
+    C_PRINT,
     C_WRITE,
     C_READ
   } kind;
@@ -60,17 +61,21 @@ struct _Cmd {
     } _attrib;
     struct {
       BoolExpr *condition;
-      Expr *execution; // in case condition is true
+      CmdList *execution; // in case condition is true
     } _if;
     struct {
       BoolExpr *condition;
-      Expr *firstCase; // in case condition is true
-      Expr *secondCase; // in case condition is false
+      CmdList *firstCase; // in case condition is true
+      CmdList *secondCase; // in case condition is false
     } _if_else;
     struct {
       BoolExpr *condition;
-      Expr *execution; // in case condition is true
+      CmdList *execution; // in case condition is true
     } _while;
+    struct {
+      char* string;
+      char* var;
+    } _print;
     struct {
       char* string;
     }_write;
@@ -89,12 +94,13 @@ struct _CmdList {
 Expr *ast_integer(int v);
 Expr *ast_variable(char* s);
 Expr *ast_operation(int operator, Expr *left, Expr *right);
-BoolExpr *ast_boolean(int v);
+BoolExpr *ast_boolean(char* v);
 BoolExpr *ast_relation(int operator, Expr *left, Expr *right);
 Cmd *ast_attribution(char* v, Expr *e);
-Cmd *ast_if_condition(BoolExpr *cond, Expr *exec);
-Cmd *ast_if_else_condition(BoolExpr *cond, Expr *exec1, Expr *exec2);
-Cmd *ast_while_loop(BoolExpr *cond, Expr *exec);
+Cmd *ast_if_condition(BoolExpr *cond, CmdList *exec);
+Cmd *ast_if_else_condition(BoolExpr *cond, CmdList *exec1, CmdList *exec2);
+Cmd *ast_while_loop(BoolExpr *cond, CmdList *exec);
+Cmd *ast_print(char* string, char* var);
 Cmd *ast_write(char* string);
 Cmd *ast_read(char* string);
 CmdList * ast_command_list(Cmd *first, CmdList *rest);

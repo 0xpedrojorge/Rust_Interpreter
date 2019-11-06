@@ -47,7 +47,7 @@ DONE c) Modify the 'eval' function in 'interpreter.c'.
 DONE d) Test with examples that make use of the new
 operators, for instance the available 'example3.txt'.
 
-e) Define a new file printAbsTree.c and define there a C function printExpr(Expr* exp) which prints the abstract syntax tree stored in the Expr C structure exp.
+DONE e) Define a new file printAbsTree.c and define there a C function printExpr(Expr* exp) which prints the abstract syntax tree stored in the Expr C structure exp.
 
 f) Change the main function to print the abstract syntax tree.
 
@@ -73,7 +73,7 @@ DONE d) In parser.bison change the grammar by:
 DONE -- adding grammar rules for boolean expressions.
 DONE -- define new type rules for boolean expressions.
 
-e) In printAbsTree.c : define a function printBool(BoolExpr* b) which prints the abstract syntax tree stored in b.
+DONE e) In printAbsTree.c : define a function printBool(BoolExpr* b) which prints the abstract syntax tree stored in b.
 
 ============================================================
 
@@ -94,7 +94,7 @@ DONE d) In parser.bison change the grammar by:
 -- define new type rules for commands.
 -- define the root variable as a command.
 
-e) In printAbsTree.c : define a function printCmd(Cmd* command) which prints the abstract syntax tree stored in the structure pointed by command.
+DONE e) In printAbsTree.c : define a function printCmd(Cmd* command) which prints the abstract syntax tree stored in the structure pointed by command.
 
 f) Change the main function to print commands.
 

@@ -26,7 +26,7 @@ Expr* ast_operation (int operator, Expr* left, Expr* right) {
   return node;
 }
 
-BoolExpr* ast_boolean(int v) {
+BoolExpr* ast_boolean(char* v) {
   BoolExpr* node = (BoolExpr*) malloc(sizeof(BoolExpr));
   node->kind = B_BOOLEAN;
   node->attr.value = v;
@@ -50,7 +50,7 @@ Cmd* ast_attribution(char* v, Expr* e) {
   return node;
 }
 
-Cmd* ast_if_condition(BoolExpr* cond, Expr* exec) {
+Cmd* ast_if_condition(BoolExpr* cond, CmdList* exec) {
   Cmd* node = (Cmd*) malloc(sizeof(Cmd));
   node->kind = C_IF;
   node->attr._if.condition = cond;
@@ -58,7 +58,7 @@ Cmd* ast_if_condition(BoolExpr* cond, Expr* exec) {
   return node;
 }
 
-Cmd* ast_if_else_condition(BoolExpr* cond, Expr* exec1, Expr* exec2) {
+Cmd* ast_if_else_condition(BoolExpr* cond, CmdList* exec1, CmdList* exec2) {
   Cmd* node = (Cmd*) malloc(sizeof(Cmd));
   node->kind = C_IF_ELSE;
   node->attr._if_else.condition = cond;
@@ -67,11 +67,19 @@ Cmd* ast_if_else_condition(BoolExpr* cond, Expr* exec1, Expr* exec2) {
   return node;
 }
 
-Cmd* ast_while_loop(BoolExpr* cond, Expr* exec) {
+Cmd* ast_while_loop(BoolExpr* cond, CmdList* exec) {
   Cmd* node = (Cmd*) malloc(sizeof(Cmd));
   node->kind = C_WHILE;
   node->attr._while.condition = cond;
   node->attr._while.execution = exec;
+  return node;
+}
+
+Cmd *ast_print(char* string, char* var) {
+  Cmd* node = (Cmd*) malloc(sizeof(Cmd));
+  node->kind = C_PRINT;
+  node->attr._print.string = string;
+  node->attr._print.var = var;
   return node;
 }
 

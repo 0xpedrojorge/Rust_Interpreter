@@ -1,11 +1,14 @@
 <component name="ProjectDictionaryState">
   <dictionary name="pedro">
     <words>
+      <w>andcom</w>
       <w>boolexpr</w>
       <w>cmdlist</w>
       <w>mult</w>
       <w>noyywrap</w>
       <w>nsur</w>
+      <w>printf</w>
+      <w>prog</w>
       <w>relop</w>
       <w>yyerror</w>
       <w>yyline</w>

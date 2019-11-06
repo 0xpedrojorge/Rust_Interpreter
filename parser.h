@@ -44,7 +44,7 @@
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 54 "parser.bison"
+#line 57 "parser.bison"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -79,20 +79,23 @@ CmdList* root;
     CCB = 270,
     OP = 271,
     CP = 272,
-    _PRINT = 273,
-    _READ = 274,
-    string = 275,
-    EQ = 276,
-    NE = 277,
-    LT = 278,
-    GT = 279,
-    LE = 280,
-    GE = 281,
-    PLUS = 282,
-    MINUS = 283,
-    MULT = 284,
-    DIV = 285,
-    MOD = 286
+    C = 273,
+    ANDCOM = 274,
+    _PRINT = 275,
+    _READ = 276,
+    START = 277,
+    STRING = 278,
+    EQ = 279,
+    NE = 280,
+    LT = 281,
+    GT = 282,
+    LE = 283,
+    GE = 284,
+    PLUS = 285,
+    MINUS = 286,
+    MULT = 287,
+    DIV = 288,
+    MOD = 289
   };
 #endif
 
@@ -100,16 +103,16 @@ CmdList* root;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 33 "parser.bison"
+#line 36 "parser.bison"
 
   int intValue;
-  char* stringValue;
+  char* charValue;
   Expr* exprValue;
   BoolExpr* boolExprValue;
   Cmd* cmdValue;
   CmdList* cmdListValue;
 
-#line 113 "parser.h"
+#line 116 "parser.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

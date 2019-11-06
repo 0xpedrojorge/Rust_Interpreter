@@ -41,8 +41,19 @@ int yyline = 1;
 "}" { return CCB; }
 "(" { return OP; }
 ")" { return CP; }
+"," { return C; }
+"&" { return ANDCOM; }
 "println!" { return _PRINT; }
-"read_line()" { return _READ; }
+"read_line" { return _READ; }
+"fn main()" { return START; }
+[a-z][a-zA-Z0-9]* {
+    yylval.charValue = strdup(yytext);
+    return VAR;
+}
+\".*\" {
+  yylval.charValue = strdup(yytext);
+  return STRING;
+}
 .  { yyerror("unexpected character"); }
 %%
 

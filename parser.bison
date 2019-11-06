@@ -15,9 +15,12 @@
   CCB
   OP
   CP
+  C
+  ANDCOM
   _PRINT
   _READ
-  string
+  START
+  STRING
 
 
 // Operator associativity & precedence
@@ -32,7 +35,7 @@
 // Types/values in association to grammar symbols.
 %union {
   int intValue;
-  char* stringValue;
+  char* charValue;
   Expr* exprValue;
   BoolExpr* boolExprValue;
   Cmd* cmdValue;
@@ -40,10 +43,10 @@
 }
 
 %type <intValue> INT
-%type <stringValue> VAR
+%type <charValue> VAR
 %type <intValue> TRUE
 %type <intValue> FALSE
-%type <stringValue> string
+%type <charValue> STRING
 %type <exprValue> expr
 %type <boolExprValue> boolexpr
 %type <cmdValue> cmd
@@ -53,7 +56,7 @@
 // into both parser.c and parser.h
 %code requires {
 #include <stdio.h>
-#include <stdlib.h>ma
+#include <stdlib.h>
 #include "ast.h"
 
 extern int yylex();
@@ -65,7 +68,7 @@ CmdList* root;
 }
 
 %%
-program: cmdlist { root = $1; }
+program: START OCB cmdlist CCB { root = $3; }
 
 expr:
   INT {
@@ -99,11 +102,11 @@ expr:
 
 boolexpr:
   TRUE {
-    $$ = ast_boolean(1);
+    $$ = ast_boolean("true");
   }
   |
   FALSE {
-    $$ = ast_boolean(0);
+    $$ = ast_boolean("false");
   }
   |
   expr EQ expr {
@@ -132,28 +135,32 @@ boolexpr:
   ;
 
 cmd:
-  _LET VAR AT expr {
+  _LET VAR AT expr SC {
     $$ = ast_attribution($2, $4);
   }
   |
-  _IF boolexpr OCB expr CCB _ELSE OCB expr CCB {
+  _IF boolexpr OCB cmdlist CCB _ELSE OCB cmdlist CCB {
     $$ = ast_if_else_condition($2, $4, $8);
   }
   |
-  _IF boolexpr OCB expr CCB {
+  _IF boolexpr OCB cmdlist CCB {
     $$ = ast_if_condition($2, $4);
   }
   |
-  _WHILE boolexpr OCB expr CCB {
+  _WHILE boolexpr OCB cmdlist CCB {
     $$ = ast_while_loop($2, $4);
   }
   |
-  _PRINT OP string CP {
+  _PRINT OP STRING C VAR CP SC {
+    $$ = ast_print($3, $5);
+  }
+  |
+  _PRINT OP STRING CP SC {
     $$ = ast_write($3);
   }
   |
-  VAR AT _READ {
-    $$ = ast_read($1);
+  _READ OP ANDCOM VAR CP SC {
+    $$ = ast_read($4);
   }
   ;
 
@@ -161,6 +168,11 @@ cmdlist:
   cmd cmdlist {
     $$ = ast_command_list($1, $2);
   }
+  |
+  {
+    $$ = NULL;
+  }
+  ;
 
 %%
 
