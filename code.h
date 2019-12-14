@@ -3,8 +3,9 @@
 #define _code_h_
 #include "ast.h"
 
-typedef struct _Atom Atom; //Convenience typedef
-typedef struct _Instr Instr; // Convenience typedef
+typedef struct _Atom Atom;           // Convenience typedef
+typedef struct _Label Label;         // Convenience typedef
+typedef struct _Instr Instr;         // Convenience typedef
 typedef struct _InstrList InstrList; // Convenience typedef
 
 // CODE for an atom
@@ -20,11 +21,19 @@ struct _Atom {
   } data;
 };
 
+// CODE for a label
+struct _Label {
+    char* lab_id;
+};
+
 // CODE for an instruction
 struct _Instr {
   enum {
     I_ATTRIB,
-    I_BINOP
+    I_BINOP,
+    I_GOTO_LAB,
+    I_IF_THEN_ELSE,
+    I_MK_LAB
   } kind;
   union {
     struct {
@@ -38,12 +47,18 @@ struct _Instr {
       Atom *second; // for the second element of the operation
     } binop;
     struct {
-      int operator; // EQ, NE, LT, GT, LE, GE
-      Atom *first;
-      Atom *second;
-      char *labelTrue;
-      char *labelFalse;
-    } relop;
+      char* label; // for the label id
+    } goto_label;
+    struct {
+        int relOperator;  // EQ, NE, GT, LT, GE, LE
+        Atom* left;       // first element of the comparison
+        Atom* right;      // second element of the comparison
+        char* labelTrue;  // label to go to in case comparison is True
+        char* labelFalse; // label to go to in case comparison is False
+    } if_then_else;
+    struct {
+      char* label; // for the label id
+    } mk_label;
   } instr;
 };
 
@@ -57,18 +72,17 @@ struct _InstrList {
 Atom *code_number(int v);
 Atom *code_variable(char* s);
 Atom *code_nothing();
+Label *code_label(char* s);
 Instr *code_attribution(Atom *left, Atom *right);
 Instr *code_operation(int operator, Atom *result, Atom *first, Atom *second);
+Instr *code_goto_label(char* label);
+Instr *code_if_then_else(int relop, Atom *left, Atom *right, char* labelTrue, char* labelFalse);
+Instr *code_mk_label(char* label);
 InstrList *code_instruction_list(Instr *first, InstrList *rest);
 
 // Access functions (see implementation in code.c)
 Instr *getFirst(InstrList *list);
 InstrList  *nextInstrs(InstrList * list);
 InstrList *append(InstrList *list1, InstrList *list2);
-
-void printAtom(Atom *a);
-void printInstr (Instr *instruction);
-void printListInstr (InstrList *list);
-InstrList* compileExp(Expr* e, char *r);
 
 #endif

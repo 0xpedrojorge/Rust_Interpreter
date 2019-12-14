@@ -24,6 +24,12 @@ Atom *code_nothing() {
   return node;
 }
 
+Label *code_label(char* s) {
+    Label* node = (Label*) malloc(sizeof(Label));
+    node->lab_id = s;
+    return node;
+}
+
 Instr *code_attribution(Atom *left, Atom *right) {
   Instr* node = (Instr*) malloc(sizeof(Instr));
   node->kind = I_ATTRIB;
@@ -39,6 +45,31 @@ Instr *code_operation(int operator, Atom *result, Atom *first, Atom *second) {
   node->instr.binop.result = result;
   node->instr.binop.first = first;
   node->instr.binop.second = second;
+  return node;
+}
+
+Instr *code_goto_label(char* label) {
+  Instr* node = (Instr*) malloc(sizeof(Instr));
+  node->kind = I_GOTO_LAB;
+  node->instr.goto_label.label = label;
+  return node;
+}
+
+Instr *code_if_then_else(int relop, Atom *left, Atom *right, char* labelTrue, char* labelFalse) {
+  Instr* node = (Instr*) malloc(sizeof(Instr));
+  node->kind = I_IF_THEN_ELSE;
+  node->instr.if_then_else.relOperator = relop;
+  node->instr.if_then_else.left = left;
+  node->instr.if_then_else.right = right;
+  node->instr.if_then_else.labelTrue = labelTrue;
+  node->instr.if_then_else.labelFalse = labelFalse;
+  return node;
+}
+
+Instr *code_mk_label(char* label) {
+  Instr* node = (Instr*) malloc(sizeof(Instr));
+  node->kind = I_MK_LAB;
+  node->instr.mk_label.label = label;
   return node;
 }
 

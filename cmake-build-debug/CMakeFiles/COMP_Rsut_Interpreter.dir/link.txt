@@ -1,1 +1,0 @@
-/usr/bin/cc -g   CMakeFiles/COMP_Rsut_Interpreter.dir/main.c.o  -o COMP_Rsut_Interpreter 
