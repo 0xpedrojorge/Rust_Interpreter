@@ -47,6 +47,7 @@ struct _BoolExpr {
 struct _Cmd {
   enum {
     C_ATTRIB,
+    C_ATTRIB_BOOL,
     C_IF,
     C_IF_ELSE,
     C_WHILE,
@@ -59,6 +60,10 @@ struct _Cmd {
       char* var; // variable
       Expr *expression; // expression
     } _attrib;
+    struct {
+      char* var; // variable
+      BoolExpr *expression; // expression
+    } _attrib_bool;
     struct {
       BoolExpr *condition;
       CmdList *execution; // in case condition is true
@@ -97,6 +102,7 @@ Expr *ast_operation(int operator, Expr *left, Expr *right);
 BoolExpr *ast_boolean(char* v);
 BoolExpr *ast_relation(int operator, Expr *left, Expr *right);
 Cmd *ast_attribution(char* v, Expr *e);
+Cmd *ast_attribution_bool(char* v, BoolExpr *e);
 Cmd *ast_if_condition(BoolExpr *cond, CmdList *exec);
 Cmd *ast_if_else_condition(BoolExpr *cond, CmdList *exec1, CmdList *exec2);
 Cmd *ast_while_loop(BoolExpr *cond, CmdList *exec);

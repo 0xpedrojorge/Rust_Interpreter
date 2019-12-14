@@ -139,6 +139,10 @@ cmd:
     $$ = ast_attribution($2, $4);
   }
   |
+  _LET VAR AT boolexpr SC {
+    $$ = ast_attribution_bool($2, $4);
+  }
+  |
   _IF boolexpr OCB cmdlist CCB _ELSE OCB cmdlist CCB {
     $$ = ast_if_else_condition($2, $4, $8);
   }

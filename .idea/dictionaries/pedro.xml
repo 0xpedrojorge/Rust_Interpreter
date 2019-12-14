@@ -2,8 +2,10 @@
   <dictionary name="pedro">
     <words>
       <w>andcom</w>
+      <w>binop</w>
       <w>boolexpr</w>
       <w>cmdlist</w>
+      <w>instrs</w>
       <w>mult</w>
       <w>noyywrap</w>
       <w>nsur</w>
