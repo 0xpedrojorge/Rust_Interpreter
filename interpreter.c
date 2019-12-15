@@ -166,6 +166,8 @@ InstrList* compileCmdList(CmdList* list);
 
 int temporaryRegistersUsed = 0;
 char* newTempRegister() {
+  if (temporaryRegistersUsed == 8)
+    temporaryRegistersUsed = 0;
   char* temp = (char*) malloc(1024 * sizeof(char));
   sprintf(temp, "t%d", temporaryRegistersUsed++);
   return temp;
@@ -348,8 +350,7 @@ InstrList* compileCmd(Cmd* c) {
           l0 = strdup(newLabel());
           l1 = strdup(newLabel());
           InstrList* n0 = compileBool(c->attr._if.condition, l0, l1);
-          n0 = append(n0, code_instruction_list(code_mk_label(l0), NULL));
-          n0 = append(n0, compileCmdList(c->attr._if.execution));
+          n0 = append(n0, code_instruction_list(code_mk_label(l0), compileCmdList(c->attr._if.execution)));
           return append(n0, code_instruction_list(code_mk_label(l1), NULL));
 
         case C_IF_ELSE:
@@ -357,23 +358,19 @@ InstrList* compileCmd(Cmd* c) {
           l1 = strdup(newLabel());
           l2 = strdup(newLabel());
           InstrList* n1 = compileBool(c->attr._if_else.condition, l0, l1);
-          n1 = append(n1, code_instruction_list(code_mk_label(l0), NULL));
-          n1 = append(n1, compileCmdList(c->attr._if_else.firstCase));
-          n1 = append(n1, code_instruction_list(code_goto_label(l2), NULL));
-          n1 = append(n1, code_instruction_list(code_mk_label(l1), NULL));
-          n1 = append(n1, compileCmdList(c->attr._if_else.secondCase));
+          n1 = append(n1, code_instruction_list(code_mk_label(l0), compileCmdList(c->attr._if_else.firstCase)));
+          n1 = append(n1, code_instruction_list(code_goto_label(l2), code_instruction_list(code_mk_label(l1), compileCmdList(c->attr._if_else.secondCase))));
           return append (n1, code_instruction_list(code_mk_label(l2), NULL));
 
         case C_WHILE:
           l0 = strdup(newLabel());
           l1 = strdup(newLabel());
           l2 = strdup(newLabel());
-          InstrList* n2 = code_instruction_list(code_mk_label(l0), NULL);
-          n2 = append(n2, compileBool(c->attr._while.condition, l1, l2));
-          n2 = append(n2, code_instruction_list(code_mk_label(l1), NULL));
-          n2 = append(n2, compileCmdList(c->attr._while.execution));
-          n2 = append(n2, code_instruction_list(code_goto_label(l0), NULL));
-          return append(n2, code_instruction_list(code_mk_label(l2), NULL));
+          InstrList* n2 = code_instruction_list(code_mk_label(l0), compileBool(c->attr._while.condition, l1, l2));
+          n2 = append(n2, code_instruction_list(code_mk_label(l1), compileCmdList(c->attr._while.execution)));
+          return append(n2, code_instruction_list(code_goto_label(l0), code_instruction_list(code_mk_label(l2), NULL)));
+
+
     }
 }
 

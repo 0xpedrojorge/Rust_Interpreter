@@ -1,9 +1,7 @@
 fn main(){
     let x = 2 + b;
-    if x<2 {
+    while x<2 {
         let y=3;
-    } else {
-        let z=3;
     }
     let c=10;
 }
