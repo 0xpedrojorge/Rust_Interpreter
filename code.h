@@ -33,7 +33,10 @@ struct _Instr {
     I_BINOP,
     I_GOTO_LAB,
     I_IF_THEN_ELSE,
-    I_MK_LAB
+    I_MK_LAB,
+    I_PRINT,
+    I_WRITE,
+    I_READ
   } kind;
   union {
     struct {
@@ -59,6 +62,16 @@ struct _Instr {
     struct {
       char* label; // for the label id
     } mk_label;
+    struct {
+      char* string; //String to be printed
+      Atom* a;
+    } _print;
+    struct {
+      char* string;
+    } _write;
+    struct {
+      char* string
+    } _read;
   } instr;
 };
 

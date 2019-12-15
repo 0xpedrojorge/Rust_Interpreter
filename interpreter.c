@@ -370,7 +370,12 @@ InstrList* compileCmd(Cmd* c) {
           n2 = append(n2, code_instruction_list(code_mk_label(l1), compileCmdList(c->attr._while.execution)));
           return append(n2, code_instruction_list(code_goto_label(l0), code_instruction_list(code_mk_label(l2), NULL)));
 
-
+        case C_PRINT:
+        case C_WRITE:
+        case C_READ:
+        default:
+          printf("ERROR");
+          return 0;
     }
 }
 
