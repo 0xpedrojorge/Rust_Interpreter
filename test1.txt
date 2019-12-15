@@ -1,5 +1,5 @@
 fn main(){
-    let x =2;
+    let x = 2 + b;
     if x<2 {
         let y=3;
     } else {

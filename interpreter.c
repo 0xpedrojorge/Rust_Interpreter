@@ -167,7 +167,7 @@ InstrList* compileCmdList(CmdList* list);
 int temporaryRegistersUsed = 0;
 char* newTempRegister() {
   char* temp = (char*) malloc(1024 * sizeof(char));
-  sprintf(temp, "$t%d", temporaryRegistersUsed++);
+  sprintf(temp, "t%d", temporaryRegistersUsed++);
   return temp;
 }
 int labelsUsed = 0;
